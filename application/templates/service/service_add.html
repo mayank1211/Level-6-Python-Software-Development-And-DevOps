@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% block main %}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+            <form action="/service/new" method="POST">
+                <div class="nhsuk-grid-column-two-thirds">
+                    <fieldset class="nhsuk-fieldset">
+                        <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl"></legend>
+                        <h1 class="nhsuk-fieldset__heading">
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl">What is your service details?</legend>
+                        </h1>
+                        <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl"></legend>
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label">Service Name</label> 
+                            <input class="nhsuk-input" name="Service" type="text" required>
+                        </div>
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label">Host URL</label> 
+                            <input class="nhsuk-input" name="Host" type="text" required>
+                        </div>
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label">Port</label> 
+                            <input class="nhsuk-input" name="Port" type="number" required>
+                        </div>
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label">Service Runtime Interval</label> 
+                            <input class="nhsuk-input" name="Runtime" type="number" required>
+                        </div>
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label">Notification Email Address</label> 
+                            <input class="nhsuk-input" name="Email" type="email" required>
+                        </div>
+                        <button class="nhsuk-input" type="submit" style="float: left;">Add Service</button>                          
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-two-thirds">
+                {% if errorMessage %}
+                <div class="nhsuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1">
+                    <h2 class="nhsuk-error-summary__title" id="error-summary-title">
+                        There is a problem
+                    </h2>
+                    <div class="nhsuk-error-summary__body">
+                        <p>
+                            Error occured during authenticating the user.
+                        </p>
+                        <ul class="nhsuk-list nhsuk-error-summary__list">
+                            <li>
+                                <a href="#example-error-1">{{ errorMessage }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                <form method="post" action="/login">
+                    <h1 id="title">{{ title }}</h1>
+                    <p>Not a member yet? <a href="/register">Sign up now</a></p>
+
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="email_address" id="email">
+                            Email
+                        </label>
+                        <input class="nhsuk-input nhsuk-input--width-20" id="email_address" name="email_address"
+                            type="email"
+                            style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAUBJREFUOBGVVE2ORUAQLvIS4gwzEysHkHgnkMiEc4zEJXCMNwtWTmDh3UGcYoaFhZUFCzFVnu4wIaiE+vvq6+6qTgthGH6O4/jA7x1OiCAIPwj7CoLgSXDxSjEVzAt9k01CBKdWfsFf/2WNuEwc2YqigKZpK9glAlVVwTTNbQJZlnlCkiTAZnF/mePB2biRdhwHdF2HJEmgaRrwPA+qqoI4jle5/8XkXzrCFoHg+/5ICdpm13UTho7Q9/0WnsfwiL/ouHwHrJgQR8WEwVG+oXpMPaDAkdzvd7AsC8qyhCiKJjiRnCKwbRsMw9hcQ5zv9maSBeu6hjRNYRgGFuKaCNwjkjzPoSiK1d1gDDecQobOBwswzabD/D3Np7AHOIrvNpHmPI+Kc2RZBm3bcp8wuwSIot7QQ0PznoR6wYSK0Xb/AGVLcWwc7Ng3AAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
+                            autocomplete="true">
+                    </div>
+
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label" for="password" id="password">
+                            Password
+                        </label>
+                        <input class="nhsuk-input nhsuk-input--width-20" id="password" name="auth_pass" type="password"
+                            style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAUBJREFUOBGVVE2ORUAQLvIS4gwzEysHkHgnkMiEc4zEJXCMNwtWTmDh3UGcYoaFhZUFCzFVnu4wIaiE+vvq6+6qTgthGH6O4/jA7x1OiCAIPwj7CoLgSXDxSjEVzAt9k01CBKdWfsFf/2WNuEwc2YqigKZpK9glAlVVwTTNbQJZlnlCkiTAZnF/mePB2biRdhwHdF2HJEmgaRrwPA+qqoI4jle5/8XkXzrCFoHg+/5ICdpm13UTho7Q9/0WnsfwiL/ouHwHrJgQR8WEwVG+oXpMPaDAkdzvd7AsC8qyhCiKJjiRnCKwbRsMw9hcQ5zv9maSBeu6hjRNYRgGFuKaCNwjkjzPoSiK1d1gDDecQobOBwswzabD/D3Np7AHOIrvNpHmPI+Kc2RZBm3bcp8wuwSIot7QQ0PznoR6wYSK0Xb/AGVLcWwc7Ng3AAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
+                            autocomplete="off">
+                    </div>
+                    <p><a href="/forgotPassword">Forgot password</a></p>
+                    <input type="hidden" name="_csrf" value="uZ9CMmEc-uS8bBz_562fdYYIRSrKy22ILug8">
+
+                    <button class="nhsuk-button" type="submit">
+                        Sign in
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

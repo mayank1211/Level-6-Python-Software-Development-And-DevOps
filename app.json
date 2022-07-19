@@ -1,0 +1,11 @@
+{
+  "stack": "heroku-20",
+  "success_url": "/",
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "python -m pytest"
+      }
+    }
+  }
+}
