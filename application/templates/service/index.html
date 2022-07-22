@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<style>
+    section,
+    aside {
+        background-color: white;
+        width: 50%;
+        height: 50%;
+        padding: 20px 20px 0 20px;
+        margin-top: 30px;
+    }
+
+    aside {
+        height: 357px;
+    }
+
+    h1 {
+        margin-bottom: 0;
+    }
+</style>
+
+{% if not serviceArry  %}
+    <div class="nhsuk-width-container" style="height: 52%;">
+      <h2 style="margin: 19% auto;">There are either no services currently being monitored or have been added to the server.</h2>
+    </div>
+{%  else  %}
+    <section class="nhsuk-hero">
+      <div class="nhsuk-width-container nhsuk-hero--border">
+        <div class="nhsuk-grid-row">
+          <div class="nhsuk-grid-column-two-thirds">
+            <div class="nhsuk-hero__wrapper">
+              <h1 class="nhsuk-u-margin-bottom-3">Monitor Your Services</h1>
+              <p class="nhsuk-body-l nhsuk-u-margin-bottom-0">Get instant free alerts.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <div class="nhsuk-width-container">
+      <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+          <div class="nhsuk-grid-column">
+            <div class="nhsuk-table-responsive">
+              <table class="nhsuk-table" cellspacing="0" cellpadding="1">
+                <caption class="nhsuk-table__caption">
+                  Service currently under monitoring
+                </caption>
+                <thead class="nhsuk-table__head">
+                  <tr class="nhsuk-table__row">
+                    <th class="nhsuk-table__header" scope="col">Service</th>
+                    <th class="nhsuk-table__header" scope="col">Host</th>
+                    <th class="nhsuk-table__header" scope="col">Port</th>
+                    <th class="nhsuk-table__header" scope="col">Lastest Success</th>
+                    <th class="nhsuk-table__header" scope="col">Lastest Failure</th>
+                    <th class="nhsuk-table__header" scope="col">30 Day Availability</th>
+                    <th class="nhsuk-table__header" scope="col">24 Hour Failures</th>
+                  </tr>
+                </thead>
+                <tbody class="nhsuk-table__body">
+                  {% for service in serviceArry %}
+                      <tr class="nhsuk-table__row">
+                        <td class="nhsuk-table__cell">
+                          <a href="/service/{{ service.Id }}">{{ service.Service }}</a>
+                        </td>
+                        <td class="nhsuk-table__cell">{{ service.Host }}</td>
+                        <td class="nhsuk-table__cell">{{ service.Port }}</td>
+                        <td class="nhsuk-table__cell">{{ service.Success }}</td>
+                        <td class="nhsuk-table__cell">{{ service.Failure }}</td>
+                        <td class="nhsuk-table__cell">{{ service.availability }}</td>
+                        <td class="nhsuk-table__cell">{{ service.failure24Hrs }}</td>
+                      </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+{% endif %}
+
+{% endblock %}

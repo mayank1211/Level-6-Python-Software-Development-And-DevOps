@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-four-thirds">
+          <div class="nhsuk-table-responsive">
+            <h2>Services online</h2>
+            <table class="nhsuk-table" cellspacing="0" cellpadding="1">
+              <caption class="nhsuk-table__caption">
+                Service currently being monitored
+              </caption>
+              <thead class="nhsuk-table__head">
+                <tr class="nhsuk-table__row">
+                  <th class="nhsuk-table__header" scope="col">Service</th>
+                  <th class="nhsuk-table__header" scope="col">Host</th>
+                   {% if User.role == 'Admin' %}
+                  <th class="nhsuk-table__header" scope="col">Status</th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody class="nhsuk-table__body">
+                {% for service in listDomains %}
+                    {% if service.flag %}
+                        <tr class="nhsuk-table__row">
+                        <td class="nhsuk-table__cell">
+                            <a href="/service/{{ service._id }}">{{ service.Service }}</a>
+                        </td>
+                        <td class="nhsuk-table__cell">{{ service.Host }}</td>
+                        {% if User.role == 'Admin' %}
+                            <td class="nhsuk-table__cell">
+                            {% if service.flag %}
+                                <form action='/services/{{ service._id }}' method="POST">
+                                <button class="nhsuk-button" type="submit" name="Online" value='Turn-Off'>
+                                    Stop
+                                </button>
+                                </form>
+                            {% endif %}
+                            </td>
+                        {% endif %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
+        <div class="nhsuk-grid-column-four-thirds">
+          <div class="nhsuk-table-responsive">
+            <h2>Services offline</h2>
+            <table class="nhsuk-table" cellspacing="0" cellpadding="1">
+              <caption class="nhsuk-table__caption">
+                Service currently stopped
+              </caption>
+              <thead class="nhsuk-table__head">
+                <tr class="nhsuk-table__row">
+                  <th class="nhsuk-table__header" scope="col">Service</th>
+                  <th class="nhsuk-table__header" scope="col">Host</th>
+                  {% if User.role == 'Admin' %}
+                    <th class="nhsuk-table__header" scope="col">Status</th>
+                    <th class="nhsuk-table__header" scope="col">Remove</th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody class="nhsuk-table__body">
+                {% for service in listDomains%}
+                  {% if not service.flag %}
+                    <tr class="nhsuk-table__row">
+                      <td class="nhsuk-table__cell">
+                        <a href="/service/{{ service._id }}">{{ service.Service }}</a>
+                      </td>
+                      <td class="nhsuk-table__cell">{{ service.Host }}</td>
+                      {% if User.role == 'Admin' %}
+                        <td class="nhsuk-table__cell">
+                          {% if not service.flag %}
+                            <form action='/services/{{ service._id }}' method="POST">
+                              <button class="nhsuk-button" type="submit" name="Offline" value='Turn-On'>
+                                Start Service
+                              </button>
+                            </form>
+                          {% endif %}
+                        </td>
+                        <td class="nhsuk-table__cell">
+                          {% if not service.flag %}
+                            <a href="/service/delete/{{ service._id }}">Remove Service</a>
+                          {% endif %}
+                        </td>
+                      {% endif %}
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+{% endblock %}

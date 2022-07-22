@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-two-thirds">
+                <fieldset class="nhsuk-fieldset">
+                    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl">
+                        <h1 class="nhsuk-fieldset__heading">
+                            Manage Profile
+                        </h1>
+                    </legend>
+
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label">
+                            Name: {{ user.name }}
+                        </label>
+                    </div>
+
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label">
+                            Role: {{ user.jobRole }}
+                        </label>
+                    </div>
+
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label">
+                            Current Team: {{ user.currentTeam }}
+                        </label>
+                    </div>
+                </fieldset>
+
+                <a style="float: left; display: inline-block; background-color: #d5281b;" class="nhsuk-button"
+                    href="/delete/account/{{ user.id }}">
+                    <span class="nhsuk-action-link__text">Delete Profile</span>
+                </a>
+
+                <a style="float: right; display: inline-block;" class="nhsuk-button"
+                    href="/update/account/{{ user.id }}">
+                    <span class="nhsuk-action-link__text">Update Profile</span>
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

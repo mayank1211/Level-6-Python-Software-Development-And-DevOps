@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+      <div class="nhsuk-grid-row">
+          <div class="nhsuk-grid-column">
+            <form action="/service/{{ Service.id }}" method="GET" id='dateQueryForm'>
+              <p>Select Date & Time:</p>
+              <input class="nhsuk-input" type=datetime-local min="0" step="1" name="datePicker" value="2017-06-13T13:00">
+              <button class="nhsuk-button">Submit</button>
+            </form>
+          </div>
+      </div>
+      <br>
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-four-thirds">
+          <div class="nhsuk-table-responsive">
+            <table class="nhsuk-table" cellspacing="0" cellpadding="1">
+              <caption class="nhsuk-table__caption">
+                Service currently being monitored
+              </caption>
+              <thead class="nhsuk-table__head">
+                <tr class="nhsuk-table__row">
+                  <th class="nhsuk-table__header" scope="col">Service Status</th>
+                  <th class="nhsuk-table__header" scope="col">Host</th>
+                  <th class="nhsuk-table__header" scope="col">Port</th>
+                  <th class="nhsuk-table__header" scope="col">Error</th>
+                  <th class="nhsuk-table__header" scope="col">Time (UTC)</th>
+                </tr>
+              </thead>
+              <tbody class="nhsuk-table__body">
+                {% for service in ServiceLog %}
+                    <tr class="nhsuk-table__row">
+                    {% if service.Online  %}
+                        <td class="nhsuk-table__cell">
+                        <img src="/images/icons/greenDot.png" class='dots'>
+                        </td>
+                        {% else %}
+                        <td class="nhsuk-table__cell">
+                        <img src="/images/icons/redDot.png" class='dots'>
+                        </td>
+                    {% endif %}
+                        <td class="nhsuk-table__cell">{{ service.Host }}</td>
+                        <td class="nhsuk-table__cell">{{ service.Port }}</td>
+                        <td class="nhsuk-table__cell">{{ service.ConnectionError }}</td>
+                        <td class="nhsuk-table__cell">{{ service.timeStamp.toLocaleString('en-GB', { timeZone: 'UTC' }) }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if not datePicker %}
+                {% if page != 0 %}
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page - 1 }}' class="page-link">Previous Page</a></li>
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page }}' class="page-link">{{ page }}</a></li>
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page + 1 }}' class="page-link">{{ page + 1 }}</a></li>
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page + 2 }}' class="page-link">{{ page + 2 }}</a></li>
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page + 3 }}' class="page-link">{{ page + 3 }}</a></li>
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page + 1 }}' class="page-link">Next Page</a></li>
+                {% else %}
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page + 1 }}' class="page-link">{{ page + 1 }}</a></li>
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page + 2 }}' class="page-link">{{ page + 2 }}</a></li>
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page + 3 }}' class="page-link">{{ page + 3 }}</a></li>
+                    <li class="page-item"><a href='?datePicker={{ datePicker }}&page={{ page + 1 }}' class="page-link">Next Page</a></li>
+                {% endif %}
+            {% endif %}
+        </ul>
+      </nav>
+    </main>
+  </div>
+  
+  <script>
+    var date = new Date().toJSON().slice(0,10);
+    var time = new Date().toJSON().slice(11,19)
+    var dateTime = date+'T'+time;
+    document.querySelector(".nhsuk-input").value = dateTime;
+  </script>
+
+{% endblock %}

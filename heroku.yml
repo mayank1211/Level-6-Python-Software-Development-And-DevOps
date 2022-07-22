@@ -1,0 +1,8 @@
+build:
+  docker:
+    web: Dockerfile
+run:
+  web:
+    command:
+      - cd ./application/ && gunicorn application:app --bind 0.0.0.0:${PORT} --workers=4
+    image: web
