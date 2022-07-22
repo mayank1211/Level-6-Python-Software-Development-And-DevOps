@@ -42,9 +42,7 @@
 #         self.assertEqual(len(adminUser), 1)
 #         self.assertEqual(adminUser[0].Name, "Mayank Patel")
 #         self.assertEqual(adminUser[0].Email, "mayank.patel@admin.com")
-#         self.assertEqual(adminUser[0].JobRole, "Software Developer")
 #         self.assertEqual(adminUser[0].UserRole, "Admin")
-#         self.assertEqual(adminUser[0].CurrentTeam, "NHS.UK - Service Profiles")
 
 #     def test_standard_user_model(self):
 #         """
@@ -55,9 +53,7 @@
 #         self.assertEqual(len(standardUser), 1)
 #         self.assertEqual(standardUser[0].Name, "Mayank Patel Standard")
 #         self.assertEqual(standardUser[0].Email, "mayank.patel@standard.com")
-#         self.assertEqual(standardUser[0].JobRole, "Software Developer - Standard")
 #         self.assertEqual(standardUser[0].UserRole, "Standard")
-#         self.assertEqual(standardUser[0].CurrentTeam, "NHS.UK - Service Profiles")
 
 #     def test_skills_model(self):
 #         """

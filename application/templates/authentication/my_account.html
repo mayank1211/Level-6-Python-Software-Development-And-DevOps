@@ -5,41 +5,58 @@
     <main class="nhsuk-main-wrapper" id="maincontent">
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-two-thirds">
-                <fieldset class="nhsuk-fieldset">
-                    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl">
-                        <h1 class="nhsuk-fieldset__heading">
-                            Manage Profile
-                        </h1>
-                    </legend>
-
-                    <div class="nhsuk-form-group">
-                        <label class="nhsuk-label">
-                            Name: {{ user.name }}
-                        </label>
+                {% if flashMessage %}
+                <div class="nhsuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" style="border: 4px solid #007f3b !important;">
+                    <div class="nhsuk-error-summary__body">
+                        <h3>
+                            Password Update
+                        </h3>
+                        <ul class="nhsuk-list nhsuk-error-summary__list">
+                            <li>
+                                <a href="#" style="color: #007f3b">{{ flashMessage }}</a>
+                            </li>
+                        </ul>
                     </div>
-
-                    <div class="nhsuk-form-group">
-                        <label class="nhsuk-label">
-                            Role: {{ user.jobRole }}
-                        </label>
-                    </div>
-
-                    <div class="nhsuk-form-group">
-                        <label class="nhsuk-label">
-                            Current Team: {{ user.currentTeam }}
-                        </label>
-                    </div>
-                </fieldset>
-
-                <a style="float: left; display: inline-block; background-color: #d5281b;" class="nhsuk-button"
-                    href="/delete/account/{{ user.id }}">
+                </div>
+                {% endif %}
+                <a style="float: right; background-color: #db1e11;" class="nhsuk-button"
+                    href="/delete/account/{{ current_user.Id }}">
                     <span class="nhsuk-action-link__text">Delete Profile</span>
                 </a>
+                <fieldset class="nhsuk-fieldset">
 
-                <a style="float: right; display: inline-block;" class="nhsuk-button"
-                    href="/update/account/{{ user.id }}">
-                    <span class="nhsuk-action-link__text">Update Profile</span>
-                </a>
+                    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl">
+                        <h1 class="nhsuk-fieldset__heading">
+                            My Profile
+                        </h1>
+                    </legend>
+                    <div class="nhsuk-form-group">
+                        <label class="nhsuk-label">
+                            Name: {{ current_user.Name }}
+                        </label>
+                    </div>
+
+                </fieldset>
+
+                <form action="/manage/account" method="POST">
+                    <fieldset class="nhsuk-fieldset">
+                        <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl"></legend>
+                        <h1 class="nhsuk-fieldset__heading">
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl">Change Password
+                            </legend>
+                        </h1>
+                        <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl"></legend>
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label">New Password</label>
+                            <input class="nhsuk-input" name="password" type="text" required>
+                        </div>
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label">Confirm Password</label>
+                            <input class="nhsuk-input" name="confirm_password" type="text" required>
+                        </div>
+                        <button class="nhsuk-input nhsuk-button" type="submit" style="float: left;">Change Password</button>
+                    </fieldset>
+                </form>
             </div>
         </div>
     </main>
