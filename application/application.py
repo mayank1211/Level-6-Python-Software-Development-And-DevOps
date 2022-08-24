@@ -36,6 +36,7 @@ def load_user(user_id):
 
 from models import Users, create_database_and_data
 import my_routes
+from  website_pinger import isWebServiceAlive
 # Call function from models.py file to required create tables and users
 create_database_and_data()
 # Start register service monitoring on application launch
