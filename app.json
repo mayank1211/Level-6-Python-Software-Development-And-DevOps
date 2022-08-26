@@ -4,7 +4,13 @@
   "environments": {
     "test": {
       "scripts": {
-        "test": "python -m pytest"
+        "test": "pytest --cov=application ."
+      },
+      "formation": {
+        "test": {
+          "quantity": 1,
+          "size": "standard-1x"
+        }
       }
     }
   }
