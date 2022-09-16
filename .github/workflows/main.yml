@@ -49,13 +49,25 @@ jobs:
         with:
           email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_MAIN }}
           process_type: web
+        if: github.event_name != 'pull_request'
+        
+      - name: Build, Push and Release a Docker container to Heroku
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_PREVIEW }}
+          process_type: web
+        if: github.event_name == 'pull_request'
+
 
       # OWASP scanner for website.
       - name: OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: 'https://flask-python-mayank.herokuapp.com'
+          target: 'https://flask-python-mayank-preview.herokuapp.com'
+        if: github.event_name == 'pull_request'
 
  
