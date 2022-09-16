@@ -1,0 +1,104 @@
+{% extends "base.html" %} {% block main %}
+
+    <style>
+        section,
+        aside {
+            background-color: white;
+            width: 50%;
+            height: 50%;
+            padding: 20px 20px 0 20px;
+            margin-top: 30px;
+        }
+
+        aside {
+            height: 357px;
+        }
+
+        h1 {
+            margin-bottom: 0;
+        }
+    </style>
+
+    {% if not allRegisteredServices %}
+        <div class="nhsuk-width-container" style="height: 52%; margin: 10% auto">
+
+            <h2>
+                There are either no services currently being monitored or have been added to
+                the server.
+            </h2>
+            <a href="/service/add" class="nhsuk-button" style="margin: auto auto">Add New Service</a>
+
+
+        </div>
+    {% else %}
+        <div class="nhsuk-width-container">
+            <main class="nhsuk-main-wrapper" id="maincontent">
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-hero__wrapper">
+                        <h1 class="nhsuk-u-margin-bottom-3">Monitor Your Services</h1>
+                        <p class="nhsuk-body-l nhsuk-u-margin-bottom-0">
+                            Get instant free alerts.
+                        </p>
+                        <a href="/service/add" class="nhsuk-button" id="add-service-btn" style="float: right; display: inline">Add New Service</a>
+
+                    </div>
+                    <div class="nhsuk-grid-column">
+                        <div class="nhsuk-table-responsive">
+                            <table class="nhsuk-table" cellspacing="0" cellpadding="1">
+                                <caption class="nhsuk-table__caption">
+                                    Service currently under monitoring
+                                </caption>
+                                <thead class="nhsuk-table__head">
+                                <tr class="nhsuk-table__row">
+                                    <th class="nhsuk-table__header" scope="col">Service</th>
+                                    <th class="nhsuk-table__header" scope="col">Host</th>
+                                    <th class="nhsuk-table__header" scope="col">Latest Success</th>
+                                    <th class="nhsuk-table__header" scope="col">Latest Failure</th>
+                                    <th class="nhsuk-table__header" scope="col">
+                                        30 Day Availability
+                                    </th>
+                                    <th class="nhsuk-table__header" scope="col">
+                                        24 Hour Failures
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="nhsuk-table__body">
+                                {% for service in allRegisteredServices %}
+                                    <tr class="nhsuk-table__row">
+                                        <td class="nhsuk-table__cell">
+                                            <a href="/service/{{ service.Id }}"
+                                            >{{ service.ServiceName }}</a
+                                            >
+                                        </td>
+                                        <td class="nhsuk-table__cell">{{ service.Domain }}</td>
+                                        {% if service.Success %}
+                                            <td class="nhsuk-table__cell">{{ service.Success }}</td>
+                                        {% else %}
+                                            <td class="nhsuk-table__cell">N/A</td>
+                                        {% endif %} {% if service.Failure %}
+                                        <td class="nhsuk-table__cell">{{ service.Failure }}</td>
+                                    {% else %}
+                                        <td class="nhsuk-table__cell">N/A</td>
+                                    {% endif %} {% if service.thirtyDaysFailureCount %}
+                                        <td class="nhsuk-table__cell">
+                                            {{ service.thirtyDaysFailureCount }}%
+                                        </td>
+                                    {% else %}
+                                        <td class="nhsuk-table__cell">N/A</td>
+                                    {% endif %} {% if service.twentyFourHrsFailuresCount %}
+                                        <td class="nhsuk-table__cell">
+                                            {{ service.twentyFourHrsFailuresCount }}%
+                                        </td>
+                                    {% else %}
+                                        <td class="nhsuk-table__cell">N/A</td>
+                                    {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    {% endif %} {% endblock %}

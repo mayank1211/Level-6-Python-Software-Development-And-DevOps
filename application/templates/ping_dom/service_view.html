@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    <style>
+        .nhsuk-table {
+            overflow-y: scroll; 
+            overflow-x: hidden; 
+            width: 100%; 
+            height:400px; 
+            display: block;
+        }
+        .nhsuk-table__header {
+            width: 500px;
+        }
+        .nhsuk-table__cell {
+            display: inline-block;
+            word-wrap: break-word
+        }
+
+        #service-update-btn {
+            float: right; 
+            text-align: center; 
+            position: relative; 
+            left: -2%
+        }
+    </style>
+
+    <div class="nhsuk-width-container">
+        <main class="nhsuk-main-wrapper" id="maincontent">
+            <h2 style="position: relative; left: -2%">Service Monitoring - {{ ServiceName }}</h2>
+            <a id="service-update-btn" class="nhsuk-input" href="/service/update/{{ ServiceId }}">Update Service</a>
+            {% if ServiceLogs %}
+                <br>
+                <br>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-four-thirds">
+                        <div class="nhsuk-table-responsive">
+                            <table class="nhsuk-table" cellspacing="0" cellpadding="1">
+                                <thead class="nhsuk-table__head">
+                                <tr class="nhsuk-table__row">
+                                    <th class="nhsuk-table__header" scope="col" id="service-status-title">Service Status</th>
+                                    <th class="nhsuk-table__header" scope="col" id="service-host-title">Host</th>
+                                    <th class="nhsuk-table__header" scope="col" id="service-error-title">Error</th>
+                                    <th class="nhsuk-table__header" scope="col" id="service-time-title">Time (UTC)</th>
+                                </tr>
+                                </thead>
+                                <tbody class="nhsuk-table__body">
+                                {% for service in ServiceLogs %}
+                                    <tr class="nhsuk-table__row">
+                                        {% if service.ServiceOnlineStatus %}
+                                            <td class="nhsuk-table__cell">
+                                                <img src="{{ url_for('static', filename='green-dot.jpg') }}" style="width: 15%; height: 15%;"/>
+                                            </td>
+                                        {% else %}
+                                            <td class="nhsuk-table__cell">
+                                                <img src="{{ url_for('static', filename='red-dot.png') }}" style="width: 12%; height: 12%;"/>
+                                            </td>
+                                        {% endif %}
+                                        <td class="nhsuk-table__cell">{{ service.Domain }}</td>
+                                        <td class="nhsuk-table__cell">{{ service.ConnectionError }}</td>
+                                        <td class="nhsuk-table__cell">{{ service.Timestamp }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <br><br>
+                <h4 style="text-align: center;">There are current no logs for this service.</h4>
+            {% endif %}
+        </main>
+    </div>
+
+    <script>
+        var date = new Date().toJSON().slice(0, 10);
+        var time = new Date().toJSON().slice(11, 19)
+        var dateTime = date + 'T' + time;
+        document.querySelector(".nhsuk-input").value = dateTime;
+    </script>
+
+{% endblock %}

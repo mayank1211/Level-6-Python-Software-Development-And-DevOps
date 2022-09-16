@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block main %}
+
+    <div class="nhsuk-width-container">
+        <main class="nhsuk-main-wrapper" id="maincontent">
+            <div class="nhsuk-grid-row">
+                {% if errorMessage %}
+                <div class="nhsuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1">
+                    <h2 class="nhsuk-error-summary__title" id="error-summary-title">
+                        There is a problem
+                    </h2>
+                    <div class="nhsuk-error-summary__body">
+                        <p>
+                            An error occured during service update
+                        </p>
+                        <ul class="nhsuk-list nhsuk-error-summary__list">
+                            <li>
+                                <a href="#example-error-1">{{ errorMessage }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                <form action="/service/update/{{ service.Id }}" method="POST">
+                    <div class="nhsuk-grid-column-two-thirds">
+                        <fieldset class="nhsuk-fieldset">
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl"></legend>
+                            <h1 class="nhsuk-fieldset__heading">
+                                <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl">What is your new
+                                    service details?
+                                </legend>
+                            </h1>
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl"></legend>
+                            <div class="nhsuk-form-group">
+                                <label class="nhsuk-label">Service Name</label>
+                                <input class="nhsuk-input" name="Service_Name" type="text"
+                                       value="{{ service.ServiceName }}" required>
+                            </div>
+                            <div class="nhsuk-form-group">
+                                <label class="nhsuk-label">Host URL</label>
+                                <input class="nhsuk-input" name="Domain" type="text" value="{{ service.Domain }}"
+                                       required>
+                            </div>
+                            <div class="nhsuk-form-group">
+                                <label class="nhsuk-label">Service Runtime Interval</label>
+                                <input class="nhsuk-input" name="Runtime" type="number"
+                                       value="{{ service.RunTimeInterval }}" required>
+                            </div>
+                            <div class="nhsuk-form-group">
+                                <label class="nhsuk-label">Notification Email Address</label>
+                                <input class="nhsuk-input" name="Email" type="email"
+                                       value="{{ service.NotificationEmail }}" required>
+                            </div>
+                            <button class="nhsuk-input" type="submit" style="float: left;">Update Service</button>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+{% endblock %}
