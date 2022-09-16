@@ -8,9 +8,7 @@
                 {% if flashMessage %}
                 <div class="nhsuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" style="border: 4px solid #007f3b !important;">
                     <div class="nhsuk-error-summary__body">
-                        <h3>
-                            Password Update
-                        </h3>
+                        <h3 id="update-password-text">Password Update</h3>
                         <ul class="nhsuk-list nhsuk-error-summary__list">
                             <li>
                                 <a href="#" style="color: #007f3b">{{ flashMessage }}</a>
@@ -42,7 +40,7 @@
                     <fieldset class="nhsuk-fieldset">
                         <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl"></legend>
                         <h1 class="nhsuk-fieldset__heading">
-                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl">Change Password
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl" id="change-password-title">Change Password
                             </legend>
                         </h1>
                         <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl"></legend>
