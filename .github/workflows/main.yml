@@ -34,6 +34,7 @@ jobs:
           pytest
           
   Heroku_Deployment:
+    needs: [Python_Test]
     runs-on: ubuntu-latest
     steps:
       # Check-out your repository.
