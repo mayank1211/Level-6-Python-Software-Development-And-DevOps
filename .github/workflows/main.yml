@@ -56,6 +56,6 @@ jobs:
       - name: OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: 'https://${{ secrets.HEROKU_APP_NAME }}.herokuapp.com'
+          target: 'https://flask-python-mayank.herokuapp.com'
 
  
