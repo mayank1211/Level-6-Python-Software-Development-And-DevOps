@@ -55,5 +55,7 @@ jobs:
       # OWASP scanner for website.
       - name: OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.7.0
+        with:
+          target: 'https://testing-123098.herokuapp.com'
 
  
