@@ -43,6 +43,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      # Build and push docker image to heroku registry and web app.
       - name: Build, Push and Release a Docker container to Heroku
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
@@ -50,4 +51,9 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           process_type: web
+
+      # OWASP scanner for website.
+      - name: OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.7.0
+
  
