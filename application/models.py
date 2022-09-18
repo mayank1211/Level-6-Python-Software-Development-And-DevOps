@@ -99,7 +99,7 @@ def create_database_and_data():
     has_registered_service = (
         db.session.query(RegisteredServices)
         .filter_by(
-            ServiceName="Stack Overflow Website", Domain="https://www.stackoverflow.com"
+            ServiceName="Stack Overflow Website", Domain="www.stackoverflow.com"
         )
         .first()
     )
@@ -107,7 +107,7 @@ def create_database_and_data():
     if not has_registered_service:
         new_registered_service = RegisteredServices(
             ServiceName="Stack Overflow Website",
-            Domain="https://www.stackoverflow.com",
+            Domain="www.stackoverflow.com",
             RunTimeInterval="60",
             NotificationEmail="mayank.patel@admin.com",
             EmailSentToggle=False,
@@ -117,7 +117,7 @@ def create_database_and_data():
 
         service_passed_record = ServiceRecords(
             ServiceId=1,
-            Domain="https://www.stackoverflow.com",
+            Domain="www.stackoverflow.com",
             ServerIpAddress="192.168.1.1",
             ServiceOnlineStatus=True,
             Timestamp=datetime.datetime.utcnow(),
@@ -125,7 +125,7 @@ def create_database_and_data():
 
         service_failed_record = ServiceRecords(
             ServiceId=1,
-            Domain="https://www.stackoverflow.com",
+            Domain="www.stackoverflow.com",
             ServerIpAddress="192.168.1.1",
             ServiceOnlineStatus=False,
             ConnectionError="Unable to connect to the server",

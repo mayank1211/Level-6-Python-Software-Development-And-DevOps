@@ -3,37 +3,33 @@
 {% block main %}
 
     <style>
-        .pagination {
-            display: inline-block;
+        .nhsuk-table {
+            overflow-y: scroll; 
+            overflow-x: hidden; 
+            width: 100%; 
+            height:400px; 
+            display: block;
         }
-
-        .pagination a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-        }
-
-        .pagination a.active {
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .pagination a:hover:not(.active) {
-            background-color: #ddd;
-            border-radius: 5px;
-        }
-
         .nhsuk-table__header {
             width: 500px;
+        }
+        .nhsuk-table__cell {
+            display: inline-block;
+            word-wrap: break-word
+        }
+
+        #service-update-btn {
+            float: right; 
+            text-align: center; 
+            position: relative; 
+            left: -2%
         }
     </style>
 
     <div class="nhsuk-width-container">
         <main class="nhsuk-main-wrapper" id="maincontent">
             <h2 style="position: relative; left: -2%">Service Monitoring - {{ ServiceName }}</h2>
-            <a id="service-update-btn" class="nhsuk-input" href="/service/update/{{ ServiceId }}" style="float: right; text-align: center; position: relative; left: -2%">Update Service</a>
+            <a id="service-update-btn" class="nhsuk-input" href="/service/update/{{ ServiceId }}">Update Service</a>
             {% if ServiceLogs %}
                 <br>
                 <br>
@@ -54,15 +50,11 @@
                                     <tr class="nhsuk-table__row">
                                         {% if service.ServiceOnlineStatus %}
                                             <td class="nhsuk-table__cell">
-                                                <img src="{{ url_for('static', filename='green-dot.jpg') }}"
-                                                     align="middle"
-                                                     style="width: 12%; height: 12%;"/>
+                                                <img src="{{ url_for('static', filename='green-dot.jpg') }}" style="width: 15%; height: 15%;"/>
                                             </td>
                                         {% else %}
                                             <td class="nhsuk-table__cell">
-                                                <img src="{{ url_for('static', filename='red-dot.png') }}"
-                                                     align="middle"
-                                                     style="width: 10%; height: 10%;"/>
+                                                <img src="{{ url_for('static', filename='red-dot.png') }}" style="width: 12%; height: 12%;"/>
                                             </td>
                                         {% endif %}
                                         <td class="nhsuk-table__cell">{{ service.Domain }}</td>
@@ -75,46 +67,6 @@
                         </div>
                     </div>
                 </div>
-
-                <ul class="pagination" style="position:relative; left:-5%;">
-                    {% if datePicker %}
-                        {% if page == 0 %}
-                            <div class="pagination">
-                                <a href='?datePicker={{ datePicker }}&page={{ page - 1 }}'>Previous Page</a>
-                                <a href='?datePicker={{ datePicker }}&page={{ page }}' classactive">{{ page }}</a>
-                                <a href='?datePicker={{ datePicker }}&page={{ page + 1 }}'>{{ page + 1 }}</a>
-                                <a href='?datePicker={{ datePicker }}&page={{ page + 2 }}'>{{ page + 2 }}</a>
-                                <a href='?datePicker={{ datePicker }}&page={{ page + 1 }}'>Next Page</a>
-                            </div>
-                        {% else %}
-                            <div class="pagination">
-                                <a href='?datePicker={{ datePicker }}&page={{ page }}' classactive">{{ page }}</a>
-                                <a href='?datePicker={{ datePicker }}&page={{ page + 1 }}'>{{ page + 1 }}</a>
-                                <a href='?datePicker={{ datePicker }}&page={{ page + 2 }}'>{{ page + 2 }}</a>
-                                <a href='?datePicker={{ datePicker }}&page={{ page + 3 }}'>{{ page + 3 }}</a>
-                                <a href='?datePicker={{ datePicker }}&page={{ page + 1 }}'>Next Page</a>
-                            </div>
-                        {% endif %}
-                    {% else %}
-                        {% if page == 0 %}
-                            <div class="pagination">
-                                <a href='?page={{ page - 1 }}'>Previous Page</a>
-                                <a href='?page={{ page }}' classactive">{{ page }}</a>
-                                <a href='?page={{ page + 1 }}'>{{ page + 1 }}</a>
-                                <a href='?page={{ page + 2 }}'>{{ page + 2 }}</a>
-                                <a href='?page={{ page + 1 }}'>Next Page</a>
-                            </div>
-                        {% else %}
-                            <div class="pagination">
-                                <a href='?page={{ page }}' classactive">{{ page }}</a>
-                                <a href='?page={{ page + 1 }}'>{{ page + 1 }}</a>
-                                <a href='?page={{ page + 2 }}'>{{ page + 2 }}</a>
-                                <a href='?page={{ page + 3 }}'>{{ page + 3 }}</a>
-                                <a href='?page={{ page + 1 }}'>Next Page</a>
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                </ul>
             {% else %}
                 <br><br>
                 <h4 style="text-align: center;">There are current no logs for this service.</h4>
