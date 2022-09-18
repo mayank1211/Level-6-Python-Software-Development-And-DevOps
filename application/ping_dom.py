@@ -1,12 +1,10 @@
 from datetime import datetime, timedelta
 from distutils import util
-
 # Import login and auth modules
 import flask_login
 from flask import request, redirect, render_template, url_for
 # Password hashing.
 from passlib.hash import sha256_crypt
-
 # Main application starting config
 from application import app, db
 from website_pinger import is_web_service_alive
@@ -139,8 +137,6 @@ def service(service_id):
     service_logs = (
         ServiceRecords.query.filter(ServiceRecords.ServiceId == service_id)
         .order_by(ServiceRecords.Timestamp.desc())
-        .offset(0 * 10)
-        .limit(50)
         .all()
     )
     registered_service = RegisteredServices.query.filter(
@@ -161,13 +157,26 @@ def service(service_id):
 @app.route("/service/new", methods=["GET", "POST"])
 @flask_login.login_required
 def service_add():
+    errorMessage=""
     if request.method == "POST":
-        registered_service_exists = RegisteredServices.query.filter(
-            RegisteredServices.ServiceName == request.form.get("Service_Name"),
-            RegisteredServices.Domain == request.form.get("Domain"),
+        registered_service_name_exists = RegisteredServices.query.filter(
+            RegisteredServices.ServiceName == request.form.get("Service_Name")
         ).first()
 
-        if not registered_service_exists:
+        registered_service_domain_exists = RegisteredServices.query.filter(
+            RegisteredServices.Domain == request.form.get("Domain")
+        ).first()
+
+
+        if not (registered_service_name_exists and registered_service_domain_exists):
+            errorMessage = "Either the service name or the URL provided is already in use. Please try again using different name or url"
+            return render_template("ping_dom/service_add.html", title="Register", errorMessage=errorMessage)
+
+        if request.form.get("Domain").find("http") != -1:
+            errorMessage = "Please remove HTTP protocol from the domain and try again."
+            return render_template("ping_dom/service_add.html", title="Register", errorMessage=errorMessage)
+
+        if not (registered_service_name_exists or registered_service_domain_exists):
             new_service = RegisteredServices(
                 ServiceName=request.form.get("Service_Name"),
                 Domain=request.form.get("Domain"),
@@ -179,9 +188,11 @@ def service_add():
             )
             save_data_to_db(new_service)
             added_new_service_id = RegisteredServices.query.filter(
+                RegisteredServices.ServiceName == request.form.get("Service_Name"),
                 RegisteredServices.Domain == request.form.get("Domain")
             ).first()
-            is_web_service_alive("add", added_new_service_id.Id)
+            is_web_service_alive("updated", added_new_service_id.Id)
+            return redirect(url_for(".index"))
 
     return render_template("ping_dom/service_add.html", title="Register")
 
@@ -189,11 +200,16 @@ def service_add():
 @app.route("/service/update/<service_id>", methods=["GET", "POST"])
 @flask_login.login_required
 def service_update(service_id):
+    errorMessage=""
     service = RegisteredServices.query.filter(
         RegisteredServices.Id == service_id
     ).first()
 
     if request.method == "POST":
+        if request.form.get("Domain").find("http") != -1:
+            errorMessage = "Please remove HTTP protocol from the domain and try again."
+            return render_template("ping_dom/service_update.html", title="Service update", service=service, errorMessage=errorMessage)
+
         service.ServiceName = request.form.get("Service_Name")
         service.Domain = request.form.get("Domain")
         service.RunTimeInterval = request.form.get("Runtime")
@@ -202,7 +218,7 @@ def service_update(service_id):
         is_web_service_alive("updated", service.Id)
         return redirect(url_for(".service", service_id=service.Id))
 
-    return render_template("ping_dom/service_update.html", title="Services", service=service)
+    return render_template("ping_dom/service_update.html", title="Service update", service=service, errorMessage=errorMessage)
 
 
 @app.route("/service/delete/<service_id>", methods=["GET", "POST"])
@@ -215,7 +231,7 @@ def service_remove(service_id):
         RegisteredServices.query.filter(RegisteredServices.Id == service_id).delete()
         ServiceRecords.query.filter(ServiceRecords.ServiceId == service_id).delete()
         save_data_to_db()
-    return redirect(url_for("index"))
+    return redirect(url_for("services"))
 
 
 @app.route("/services", methods=["GET"])
