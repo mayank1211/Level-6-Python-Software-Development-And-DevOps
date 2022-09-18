@@ -54,7 +54,7 @@ class TestModels(TestBase):
         
         self.assertEqual(registered_service.Id, 1)
         self.assertEqual(registered_service.ServiceName, "Stack Overflow Website")
-        self.assertEqual(registered_service.Domain, "https://www.stackoverflow.com")
+        self.assertEqual(registered_service.Domain, "www.stackoverflow.com")
         self.assertEqual(registered_service.RunTimeInterval, 60)
         self.assertEqual(registered_service.NotificationEmail, "mayank.patel@admin.com")
         self.assertEqual(registered_service.EmailSentToggle, False)
@@ -68,7 +68,7 @@ class TestModels(TestBase):
         
         self.assertEqual(service_record.Id, 1)
         self.assertEqual(service_record.ServiceId, 1)
-        self.assertEqual(service_record.Domain, "https://www.stackoverflow.com")
+        self.assertEqual(service_record.Domain, "www.stackoverflow.com")
         self.assertEqual(service_record.ServerIpAddress, "192.168.1.1")
         self.assertTrue(service_record.ServiceOnlineStatus)
 
@@ -80,7 +80,7 @@ class TestModels(TestBase):
         
         self.assertEqual(service_record.Id, 2)
         self.assertEqual(service_record.ServiceId, 1)
-        self.assertEqual(service_record.Domain, "https://www.stackoverflow.com")
+        self.assertEqual(service_record.Domain, "www.stackoverflow.com")
         self.assertEqual(service_record.ServerIpAddress, "192.168.1.1")
         self.assertEqual(service_record.ConnectionError, "Unable to connect to the server")
         self.assertFalse(service_record.ServiceOnlineStatus)
