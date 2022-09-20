@@ -168,7 +168,7 @@ def service_add():
         ).first()
 
 
-        if not (registered_service_name_exists and registered_service_domain_exists):
+        if registered_service_name_exists or registered_service_domain_exists:
             errorMessage = "Either the service name or the URL provided is already in use. Please try again using different name or url"
             return render_template("ping_dom/service_add.html", title="Register", errorMessage=errorMessage)
 
@@ -271,6 +271,21 @@ def my_profile():
             flash_message = "Your password has been updated, Please logout and sign back in with new credentials."
 
     return render_template("auth/my_account.html", flashMessage=flash_message)
+
+
+@app.route("/manage/users/account", methods=["GET"])
+@flask_login.login_required
+def manage_users():
+    users = Users.query.all()
+    return render_template("ping_dom/admin_control.html", users=users)
+
+
+@app.route("/delete/user/<user_id>", methods=["GET"])
+@flask_login.login_required
+def delete_user(user_id):
+    Users.query.filter(Users.id == user_id).delete()
+    db.session.commit()
+    return redirect(url_for(".index"))
 
 
 @app.route("/delete/account/<user_id>", methods=["GET", "POST"])

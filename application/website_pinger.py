@@ -122,7 +122,7 @@ def send_email_notification(service_id, timestamp):
         service_status = "Online"
     else:
         service_status = "Offline"
-    msg =  Message('Service Monitioring - NHS Digital', sender = 'mayank.patel1211.mp@gmail.com', recipients = [service.NotificationEmail])
-    msg.html = f"<html><body><div> <h2>The following service: {service.ServiceName}</h2> <ul> <li> <a href='https://flask-python-mayank.herokuapp.com/service/{service.Id}'>Service Name: {service.ServiceName}</a> </li> <li>Domain: {service.Domain}</li> <li>Status: {service_status}</li> <li>Time: {timestamp}</li> </ul></div></body></html>"
     with app.app_context():
+        msg =  Message('Service Monitioring - NHS Digital', recipients = [service.NotificationEmail])
+        msg.html = f"<html><body><div> <h2>The following service: {service.ServiceName}</h2> <ul> <li> <a href='https://flask-python-mayank.herokuapp.com/service/{service.Id}'>Service Name: {service.ServiceName}</a> </li> <li>Domain: {service.Domain}</li> <li>Status: {service_status}</li> <li>Time: {timestamp}</li> </ul></div></body></html>"
         mail.send(msg)

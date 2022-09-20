@@ -12,6 +12,7 @@ instance/*
 __pycache__/
 *.py[cod]
 *$py.class
+pytest-coverage.txt
 
 # C extensions
 *.so

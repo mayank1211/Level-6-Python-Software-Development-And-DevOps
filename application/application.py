@@ -14,13 +14,12 @@ app.secret_key = os.environ.get("APP_SECRET", 'keepMeSecret!')
 db = SQLAlchemy(app)
 
 # Setup Flask Mail for sending notifications
-# TODO: use ENV 
-app.config['MAIL_SERVER'] = os.environ.get("EMAIL_SMTP", '')
-app.config['MAIL_PORT'] = os.environ.get("EMAIL_PORT", '')
-app.config['MAIL_USERNAME'] = os.environ.get("EMAIL_ADDRESS", '')
-app.config['MAIL_PASSWORD'] = os.environ.get("EMAIL_APP_PASSWORD", '')
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_SERVER'] = os.environ.get("EMAIL_SMTP_SERVER", 'smtp.sendgrid.net')
+app.config['MAIL_PORT'] = os.environ.get("EMAIL_SMTP_PORT", 25)
+app.config['MAIL_USERNAME'] = os.environ.get("EMAIL_SMTP_EMAIL_ADDRESS", 'apikey')
+app.config['MAIL_PASSWORD'] = os.environ.get("EMAIL_SMTP_APP_PASSWORD", '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')
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_DEFAULT_SENDER'] = 'mayank.patel1211.mp@gmail.com'
 mail = Mail(app)
 
 # Initialize flask login manager to auth and sessions expiry
